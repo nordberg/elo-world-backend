@@ -11,3 +11,10 @@ class Match(db.Model):
     date = db.Column(db.DateTime, nullable=True)
     sport = db.relationship('Sport', backref='match', lazy=True, nullable=False)
 
+    def get_winner(self):
+        if self.score_1 > self.score_2:
+            return self.team_1
+        elif self.score_2 > self.score_1:
+            return self.team_2
+        else:
+            return None
