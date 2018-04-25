@@ -19,23 +19,19 @@ class Elo(db.Model):
 
 
 @blueprint.route('/', methods=['GET'])
-def hello_world():
+def get_all_elo():
     return 'Hello, elo!'
 
 
 @blueprint.route('/<sport>/', methods=['GET'])
-def hello_world(sport):
+def get_elo_for_sport(sport):
     return 'Hello, elo!'
 
 
 @blueprint.route('/<sport>/<user>/', methods=['GET'])
-def hello_world(sport, user):
+def get_elo_for_sport_and_user(sport, user):
     return 'Hello, elo!'
 
-
-@blueprint.route('/<sport>/<user>/', methods=['PUT'])
-def hello_world():
-    return 'Hello, elo!'
 
 def calculate_new_elo(r1, r2, s1):
     """ Calculates new elo for two players
