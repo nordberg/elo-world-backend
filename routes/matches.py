@@ -4,7 +4,6 @@ from flask_sqlalchemy import SQLAlchemy
 
 blueprint = Blueprint('matches', __name__)
 
-
 @blueprint.route('/')
 def matches(id):
     match = Match.query.filter_by(id=id).first()
