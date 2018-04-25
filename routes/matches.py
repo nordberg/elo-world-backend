@@ -22,7 +22,10 @@ def matches(id):
 
 db = SQLAlchemy()
 
+
 class Match(db.Model):
+    __tablename__ = 'matches'
+
     id = db.Column(db.Integer, primary_key=True)
     team_1 = db.relationship('User', backref='match', lazy=True)
     team_2 = db.relationship('User', backref='match', lazy=True)
@@ -30,6 +33,17 @@ class Match(db.Model):
     score_2 = db.Column(db.Integer, nullable=False)
     date = db.Column(db.DateTime, nullable=True)
     sport = db.relationship('Sport', backref='match', lazy=True)
+
+    def __init__(self, team_1, team_2, score_1, score_2, date, sport):
+        self.team_1 = team_1
+        self.team_2 = team_2
+        self.score_1 = score_1
+        self.score_2 = score_2
+        self.date = date
+        self.sport = sport
+
+    def __repr__(self):
+        return '<id: {}, {}, {} {} - {} {}>'.format(self.id, self.sport, self.team_1, self.score_1, self.score_2, self.team_2)
 
     def get_winner(self):
         if self.score_1 > self.score_2:
