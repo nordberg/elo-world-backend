@@ -1,3 +1,4 @@
+import os
 from flask import Flask
 from routes import (
     elo,
@@ -5,8 +6,13 @@ from routes import (
     sports,
     users,
 )
+from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
+app.config.from_object(os.environ['APP_SETTINGS'])
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+db = SQLAlchemy(app)
 
 def register_blueprints(app):
     app.register_blueprint(elo.blueprint, url_prefix="/elo")
