@@ -15,8 +15,8 @@ class MatchResult(Enum):
 
 class Elo(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    user = db.relationship('User', backref='elo', nullable=False)
-    sport = db.relationship('Sport', backref='elo', nullable=False)
+    user = db.relationship('User', backref='elo')
+    sport = db.relationship('Sport', backref='elo')
     score = db.Column(db.Integer, nullable=False)
 
 

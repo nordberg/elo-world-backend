@@ -167,6 +167,6 @@ venv.bak/
 .mypy_cache/
 
 # vim
-.swp
+*.swp
 
 # End of https://www.gitignore.io/api/python,intellij
