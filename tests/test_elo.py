@@ -1,6 +1,5 @@
-from routes.elo import calculate_new_elo, MatchResult
+from routes.elo import calculate_new_elo, WIN, DRAW, LOSE
 
 def test_calculate_new_elo_gives_correct_elo():
-    new_elo_1, new_elo_2 = calculate_new_elo(1000, 1000, MatchResult.WIN)
-    assert new_elo_1 == 123
-    assert new_elo_2 == 123
+    assert 2403, 1997 == calculate_new_elo(2400, 2000, WIN)
+    assert 2371, 2029 == calculate_new_elo(2400, 2000, LOSE)
