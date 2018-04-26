@@ -1,10 +1,11 @@
-from flask import Blueprint
+from flask import Blueprint, jsonify
 from flask_sqlalchemy import SQLAlchemy
 
 
 blueprint = Blueprint('matches', __name__)
 
-@blueprint.route('/')
+
+@blueprint.route('/<id>/')
 def matches(id):
     match = Match.query.filter_by(id=id).first()
     if request.method == 'GET':

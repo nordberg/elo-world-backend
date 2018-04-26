@@ -8,3 +8,7 @@ start:
 
 migrate:
 	docker-compose exec api python /app/migrate.py
+
+clean:
+	- docker-compose kill
+	- docker-compose rm -f

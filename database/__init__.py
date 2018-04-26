@@ -1,8 +1,29 @@
-from sqlalchemy import Column, ForeignKey, Integer, String, DateTime
+import os
+from sqlalchemy import (
+    Column,
+    ForeignKey,
+    Integer,
+    String,
+    DateTime,
+    create_engine
+)
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import relationship
+from sqlalchemy.orm import relationship, sessionmaker
 
 Base = declarative_base()
+
+
+def init_engine():
+    user = os.environ['POSTGRES_USER']
+    password = os.environ['POSTGRES_PASSWORD']
+    db_name = os.environ['POSTGRES_DB']
+    return create_engine(
+        "postgresql://{}:{}@db:5432/{}".format(user, password, db_name)
+    )
+
+
+engine = init_engine()
+Session = sessionmaker(bind=engine)
 
 
 class Elo(Base):
