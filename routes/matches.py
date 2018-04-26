@@ -23,7 +23,7 @@ def matches(match_id):
         })
 
     else:
-        response = jsonify({'error': 'No match with that id'})
+        response = jsonify({'matches': []})
     return response
 
 
