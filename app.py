@@ -11,19 +11,18 @@ from routes import (
 app = Flask(__name__)
 
 
-@app.errorhandler(exceptions.UserError)
-def not_found_handler(e):
+@app.errorhandler(exceptions.HTTPException)
+def http_exception_handler(e):
     return jsonify({
         'error': e.message
-    }), 400
-
+    }), e.http_code
 
 
 def register_blueprints(app):
-    app.register_blueprint(elo.blueprint, url_prefix="/elo")
-    app.register_blueprint(matches.blueprint, url_prefix="/matches")
-    app.register_blueprint(sports.blueprint, url_prefix="/sports")
-    app.register_blueprint(users.blueprint, url_prefix="/users")
+    app.register_blueprint(elo.blueprint, url_prefix="/api/elo")
+    app.register_blueprint(matches.blueprint, url_prefix="/api/matches")
+    app.register_blueprint(sports.blueprint, url_prefix="/api/sports")
+    app.register_blueprint(users.blueprint, url_prefix="/api/users")
 
 @app.route('/')
 def hello_world():

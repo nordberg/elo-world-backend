@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify, request
 from database import Session, User
-from routes.exceptions import UserError
+from routes.exceptions import NotFound
 
 
 blueprint = Blueprint('users', __name__)
@@ -17,7 +17,7 @@ def create_user():
     return jsonify({
         'id': new_user.id,
         'name': new_user.id,
-    })
+    }), 201
 
 @blueprint.route('/', methods=['GET'])
 def get_all_users():
@@ -31,15 +31,15 @@ def get_all_users():
             }
             for user in users
         ]
-    })
+    }), 200
 
 @blueprint.route('/<user_id>/', methods=['GET'])
 def get_user(user_id):
     session = Session()
     user = session.query(User).get(user_id)
     if user is None:
-        raise UserError("User not found")
+        raise NotFound("User not found")
     return jsonify({
         'id': user.id,
         'name': user.name,
-    })
+    }), 200
