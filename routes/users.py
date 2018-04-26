@@ -1,13 +1,12 @@
 from flask import Blueprint, jsonify, request
-from flask_sqlalchemy import SQLAlchemy
 from database import Session, User
-from routes.exceptions import NotFound
+from routes.exceptions import UserError
 
 
 blueprint = Blueprint('users', __name__)
 
 
-@blueprint.route('/', method=['POST'])
+@blueprint.route('/', methods=['POST'])
 def create_user():
     session = Session()
     req = request.json
@@ -20,7 +19,7 @@ def create_user():
         'name': new_user.id,
     })
 
-@blueprint.route('/', method=['GET'])
+@blueprint.route('/', methods=['GET'])
 def get_all_users():
     session = Session()
     users = session.query(User).all()
@@ -34,12 +33,12 @@ def get_all_users():
         ]
     })
 
-@blueprint.route('/<user_id>/', method=['GET'])
+@blueprint.route('/<user_id>/', methods=['GET'])
 def get_user(user_id):
     session = Session()
     user = session.query(User).get(user_id)
     if user is None:
-        raise NotFound("User not found")
+        raise UserError("User not found")
     return jsonify({
         'id': user.id,
         'name': user.name,

@@ -1,5 +1,4 @@
 from flask import Blueprint
-from flask_sqlalchemy import SQLAlchemy
 
 
 blueprint = Blueprint('sports', __name__)

@@ -1,5 +1,4 @@
 from flask import Blueprint, jsonify
-from flask_sqlalchemy import SQLAlchemy
 
 
 blueprint = Blueprint('matches', __name__)

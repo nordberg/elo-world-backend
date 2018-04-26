@@ -1,17 +1,23 @@
 import os
-from flask import Flask
+from flask import Flask, jsonify
 from routes import (
     elo,
     matches,
     sports,
     users,
+    exceptions
 )
-from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-db = SQLAlchemy(app)
+
+@app.errorhandler(exceptions.UserError)
+def not_found_handler(e):
+    return jsonify({
+        'error': e.message
+    }), 400
+
+
 
 def register_blueprints(app):
     app.register_blueprint(elo.blueprint, url_prefix="/elo")
@@ -25,7 +31,7 @@ def hello_world():
 
 def run():
     register_blueprints(app)
-    app.run('0.0.0.0')
+    app.run('0.0.0.0', debug=True)
 
 if __name__ == '__main__':
     run()
