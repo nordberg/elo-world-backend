@@ -45,6 +45,14 @@ def add_match():
     team_1_result = 1 if req['score_1'] > req['score_2'] else 0
     elo_1 = session.query(Elo).filter_by(sport=sport.id, user=team_1.id).first()
     elo_2 = session.query(Elo).filter_by(sport=sport.id, user=team_2.id).first()
+
+    if not elo_1:
+        elo_1 = Elo(sport=sport.id, user=team_1.id)
+        elo_1.score = 1000
+    if not elo_2:
+        elo_2 = Elo(sport=sport.id, user=team_2.id)
+        elo_2.score = 1000
+
     new_elo_1, new_elo_2 = calculate_new_elo(elo_1.score, elo_2.score, team_1_result)
 
     elo_1.score = new_elo_1
