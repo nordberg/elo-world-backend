@@ -43,6 +43,7 @@ class Match(Base):
     score_2 = Column(Integer, nullable=False)
     team_1 = Column(Integer, ForeignKey('users.id'))
     team_2 = Column(Integer, ForeignKey('users.id'))
+    sport = Column(Integer, ForeignKey('sports.id'))
     date = Column(DateTime, nullable=True)
 
     def __init__(self, team_1, team_2, score_1, score_2, date, sport):
@@ -72,6 +73,7 @@ class Sport(Base):
     name = Column(String(128), unique=True)
 
     elo = relationship('Elo')
+    match = relationship('Match')
 
     def __init__(self, name):
         self.name = name
