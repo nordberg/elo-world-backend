@@ -19,10 +19,10 @@ def http_exception_handler(e):
 
 
 def register_blueprints(app):
-    app.register_blueprint(elo.blueprint, url_prefix="/elo")
-    app.register_blueprint(matches.blueprint, url_prefix="/matches")
-    app.register_blueprint(sports.blueprint, url_prefix="/sports")
-    app.register_blueprint(users.blueprint, url_prefix="/users")
+    app.register_blueprint(elo.blueprint, url_prefix="/api/elo")
+    app.register_blueprint(matches.blueprint, url_prefix="/api/matches")
+    app.register_blueprint(sports.blueprint, url_prefix="/api/sports")
+    app.register_blueprint(users.blueprint, url_prefix="/api/users")
 
 @app.route('/')
 def hello_world():

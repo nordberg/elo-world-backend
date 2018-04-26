@@ -1,4 +1,6 @@
-from flask import Blueprint
+from flask import Blueprint, jsonify, request
+from database import Session, Elo
+from routes.exceptions import NotFound
 
 
 blueprint = Blueprint('elo', __name__)
@@ -11,17 +13,48 @@ DRAW=0.5
 
 @blueprint.route('/', methods=['GET'])
 def get_all_elo():
-    return 'Hello, elo!'
+    session = Session()
+    elos = session.query(Elo).all()
+    return jsonify({
+        'elo': [
+            {
+                'id': elo.id,
+                'user': elo.user,
+                'sport': elo.sport,
+                'score': elo.score,
+            }
+            for elo in elos
+        ]
+    }), 200
 
 
-@blueprint.route('/<sport>/', methods=['GET'])
-def get_elo_for_sport(sport):
-    return 'Hello, elo!'
+@blueprint.route('/<sport_id>/', methods=['GET'])
+def get_elo_for_sport(sport_id):
+    session = Session()
+    elos = session.query(Elo).filter_by(sport=sport_id).sort_by(Elo.score)
+    return jsonify({
+        'elo': [
+            {
+                'id': elo.id,
+                'user': elo.user,
+                'sport': elo.sport,
+                'score': elo.score,
+            }
+            for elo in elos
+        ]
+    }), 200
 
 
-@blueprint.route('/<sport>/<user>/', methods=['GET'])
+@blueprint.route('/<sport_id>/<user_id>/', methods=['GET'])
 def get_elo_for_sport_and_user(sport, user):
-    return 'Hello, elo!'
+    session = Session()
+    elo = session.query(Elo).filter_by(sport=sport_id, user=user_id).first()
+    return jsonify({
+        'id': elo.id,
+        'user': elo.user,
+        'sport': elo.sport,
+        'score': elo.score,
+    }), 200
 
 
 def calculate_new_elo(r1, r2, s1):
