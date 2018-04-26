@@ -2,10 +2,12 @@ version: '2.1'
 
 services:
   db:
-    image: postgres
+    build: ./database/
     restart: always
     environment:
-      POSTGRES_PASSWORD: abc123
+      - POSTGRES_USER=elo_api
+      - POSTGRES_PASSWORD=abc123
+      - POSTGRES_DB=elo_api
   api:
     build: .
     image: elo-api
@@ -14,3 +16,7 @@ services:
       - .:/app:Z
     ports:
       - 5000:5000
+    environment:
+      - POSTGRES_USER=elo_api
+      - POSTGRES_PASSWORD=abc123
+      - POSTGRES_DB=elo_api

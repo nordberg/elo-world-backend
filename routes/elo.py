@@ -3,19 +3,11 @@ from flask_sqlalchemy import SQLAlchemy
 
 
 blueprint = Blueprint('elo', __name__)
-db = SQLAlchemy()
 
 ELO_K = 32
 WIN=1
 LOSE=0
 DRAW=0.5
-
-
-class Elo(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    user = db.relationship('User', backref='elo')
-    sport = db.relationship('Sport', backref='elo')
-    score = db.Column(db.Integer, nullable=False)
 
 
 @blueprint.route('/', methods=['GET'])
