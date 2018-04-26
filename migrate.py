@@ -8,10 +8,10 @@ Base.metadata.create_all(engine)
 
 session = Session()
 
-pingis = Sport(name='Pingis')
-eight_ball = Sport(name='Biljard')
+table_tennis = Sport(name='Table Tennis')
+eight_ball = Sport(name='8-ball')
 
-session.add(pingis)
+session.add(table_tennis)
 session.add(eight_ball)
 
 session.commit()
