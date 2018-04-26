@@ -1,7 +1,6 @@
 from database import Sport, engine, Session, Base, User, Match, Elo
 from sqlalchemy import create_engine
 from database import Sport
-from datetime import datetime
 from sqlalchemy.orm import sessionmaker
 
 Base.metadata.drop_all(engine)
