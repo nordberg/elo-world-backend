@@ -11,12 +11,11 @@ from routes import (
 app = Flask(__name__)
 
 
-@app.errorhandler(exceptions.UserError)
-def not_found_handler(e):
+@app.errorhandler(exceptions.HTTPException)
+def http_exception_handler(e):
     return jsonify({
         'error': e.message
-    }), 400
-
+    }), e.http_code
 
 
 def register_blueprints(app):
