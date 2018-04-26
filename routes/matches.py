@@ -86,7 +86,6 @@ def add_match():
         'score_1': req['score_1'],
         'score_2': req['score_2'],
         'sport': req['sport'],
-        'date': req['date'],
         'new_elo_1': new_elo_1,
         'new_elo_2': new_elo_2,
     })
