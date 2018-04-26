@@ -26,7 +26,7 @@ session.commit()
 
 elo_1 = Elo(user=user_1.id, sport=table_tennis.id, score=1000)
 elo_2 = Elo(user=user_2.id, sport=table_tennis.id, score=1000)
-match = Match(team_1=user_1.id, team_2=user_2.id, score_1=2, score_2=1, date=datetime.now(), sport=table_tennis.id)
+match = Match(team_1=user_1.id, team_2=user_2.id, score_1=2, score_2=1, sport=table_tennis.id)
 
 session.add(match)
 session.add(elo_1)
