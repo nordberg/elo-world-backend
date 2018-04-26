@@ -18,7 +18,6 @@ def get_all_matches():
             'team_2': session.query(User).get(match.team_2).name,
             'score_1': match.score_1,
             'score_2': match.score_2,
-            'date': match.date,
             'sport': session.query(Sport).get(match.sport).name,
         } for match in matches
     ])
@@ -36,7 +35,6 @@ def get_match(match_id):
             'team_2': session.query(User).get(match.team_2).name,
             'score_1': match.score_1,
             'score_2': match.score_2,
-            'date': match.date,
             'sport': session.query(Sport).get(match.sport).name,
         })
 
