@@ -9,8 +9,8 @@ class Elo(Base):
     __tablename__ = 'elo'
 
     id = Column(Integer, primary_key=True)
-    user = relationship('User', backref='elo')
-    sport = relationship('Sport', backref='elo')
+    user = Column(Integer, ForeignKey('users.id'))
+    sport = Column(Integer, ForeignKey('sports.id'))
     score = Column(Integer, nullable=False)
 
 
@@ -18,12 +18,11 @@ class Match(Base):
     __tablename__ = 'matches'
 
     id = Column(Integer, primary_key=True)
-    team_1 = relationship('User', backref='match', lazy=True)
-    team_2 = relationship('User', backref='match', lazy=True)
     score_1 = Column(Integer, nullable=False)
     score_2 = Column(Integer, nullable=False)
+    team_1 = Column(Integer, ForeignKey('users.id'))
+    team_2 = Column(Integer, ForeignKey('users.id'))
     date = Column(DateTime, nullable=True)
-    sport = relationship('Sport', backref='match', lazy=True)
 
     def __init__(self, team_1, team_2, score_1, score_2, date, sport):
         self.team_1 = team_1
@@ -51,9 +50,16 @@ class Sport(Base):
     id = Column(Integer, primary_key=True)
     name = Column(String(128), unique=True)
 
+    elo = relationship('Elo')
+
+    def __init__(self, name):
+        self.name = name
+
 
 class User(Base):
     __tablename__ = 'users'
 
     id = Column(Integer, primary_key=True)
     name = Column(String(128), unique=True)
+    matches = relationship('Match', primaryjoin="or_(User.id==Match.team_1, User.id==Match.team_2)")
+    elo = relationship('Elo')
