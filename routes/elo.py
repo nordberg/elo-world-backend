@@ -48,7 +48,7 @@ def get_elo_for_sport(sport_id):
 @blueprint.route('/<sport_id>/<user_id>/', methods=['GET'])
 def get_elo_for_sport_and_user(sport, user):
     session = Session()
-    elo = session.query(Elo).filter_by(sport=sport_id, user=user_id).first()
+    elo = session.query(Elo).filter_by(sport=sport, user=user).first()
     return jsonify({
         'id': elo.id,
         'user': elo.user,
