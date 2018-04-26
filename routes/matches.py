@@ -52,10 +52,9 @@ def add_match():
     team_1 = session.query(User).get(req['team_1'])
     team_2 = session.query(User).get(req['team_2'])
     sport = session.query(Sport).get(req['sport'])
-    date = datetime.strptime(req['date'], '%Y-%m-%d').date()
 
     print(sport)
-    match = Match(team_1=team_1.id, team_2=team_2.id, sport=sport.id, date=date, score_1=req['score_1'], score_2=req['score_2'])
+    match = Match(team_1=team_1.id, team_2=team_2.id, sport=sport.id, score_1=req['score_1'], score_2=req['score_2'])
 
     session.add(match)
     session.commit()

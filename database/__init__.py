@@ -44,14 +44,12 @@ class Match(Base):
     team_1 = Column(Integer, ForeignKey('users.id'))
     team_2 = Column(Integer, ForeignKey('users.id'))
     sport = Column(Integer, ForeignKey('sports.id'))
-    date = Column(DateTime, nullable=True)
 
-    def __init__(self, team_1, team_2, score_1, score_2, date, sport):
+    def __init__(self, team_1, team_2, score_1, score_2, sport):
         self.team_1 = team_1
         self.team_2 = team_2
         self.score_1 = score_1
         self.score_2 = score_2
-        self.date = date
         self.sport = sport
 
     def __repr__(self):
