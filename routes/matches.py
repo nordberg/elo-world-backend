@@ -7,8 +7,26 @@ from routes.elo import calculate_new_elo, get_elo_for_sport_and_user
 blueprint = Blueprint('matches', __name__)
 
 
+@blueprint.route('/', methods=['GET'])
+def get_all_matches():
+    session = Session()
+    matches = session.query(Match).all()
+    response = jsonify([
+        {
+            'id': match.id,
+            'team_1': session.query(User).get(match.team_1).name,
+            'team_2': session.query(User).get(match.team_2).name,
+            'score_1': match.score_1,
+            'score_2': match.score_2,
+            'date': match.date,
+            'sport': session.query(Sport).get(match.sport).name,
+        } for match in matches
+    ])
+    return response
+
+
 @blueprint.route('/<match_id>/')
-def matches(match_id):
+def get_match(match_id):
     session = Session()
     match = session.query(Match).get(match_id)
     if request.method == 'GET' and match:
