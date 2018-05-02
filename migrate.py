@@ -3,8 +3,12 @@ from sqlalchemy import create_engine
 from database import Sport
 from sqlalchemy.orm import sessionmaker
 
+import random
+
 Base.metadata.drop_all(engine)
 Base.metadata.create_all(engine)
+
+POPULATE_FAKE_DATA = True
 
 session = Session()
 
@@ -14,21 +18,25 @@ eight_ball = Sport(name='8-ball')
 session.add(table_tennis)
 session.add(eight_ball)
 
-user_1 = User(name='Marcus')
-user_2 = User(name='Dexter')
 
+if POPULATE_FAKE_DATA:
+    users = ['Marcus', 'Dexter', 'William', 'Aron', 'Ragnar', 'Oskar', 'André']
+    db_users = []
+    for i, user in enumerate(users):
+        db_user = User(name=user)
+        db_users.append(db_user)
+        session.add(db_user)
+        session.commit()
+        elo = Elo(user=db_user.id, sport=table_tennis.id, score=random.randint(800,1200))
+        session.add(elo)
+        session.commit()
 
-session.add(user_1)
-session.add(user_2)
+    for i in range(100):
+        j = random.randint(0,len(db_users)-1)
+        k = j
+        while k == j:
+            k = random.randint(0,len(db_users)-1)
+        match = Match(team_1=db_users[j].id, team_2=db_users[k].id, score_1=2, score_2=random.randint(0,1), sport=table_tennis.id)
+        session.add(match)
 
-session.commit()
-
-elo_1 = Elo(user=user_1.id, sport=table_tennis.id, score=1000)
-elo_2 = Elo(user=user_2.id, sport=table_tennis.id, score=1000)
-match = Match(team_1=user_1.id, team_2=user_2.id, score_1=2, score_2=1, sport=table_tennis.id)
-
-session.add(match)
-session.add(elo_1)
-session.add(elo_2)
-
-session.commit()
+    session.commit()
