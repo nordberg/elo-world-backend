@@ -5,7 +5,8 @@ from routes import (
     matches,
     sports,
     users,
-    exceptions
+    exceptions,
+    statistics
 )
 
 app = Flask(__name__)
@@ -22,6 +23,7 @@ def register_blueprints(app):
     app.register_blueprint(elo.blueprint, url_prefix="/api/elo")
     app.register_blueprint(matches.blueprint, url_prefix="/api/matches")
     app.register_blueprint(sports.blueprint, url_prefix="/api/sports")
+    app.register_blueprint(statistics.blueprint, url_prefix="/api/statistics")
     app.register_blueprint(users.blueprint, url_prefix="/api/users")
 
 @app.route('/')
