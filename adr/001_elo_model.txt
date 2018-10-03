@@ -1,0 +1,5 @@
+# 001 Elo Model
+
+For better traceability and support for more sophisticated features the elo will be split up into 'transactions', making it event based.
+
+The elo is calculated as the sum of all delta elos for a given user.
